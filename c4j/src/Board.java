@@ -58,6 +58,13 @@ public class Board {
     }
 
     /**
+     * Return the element in row r col c.
+     * Precondition: r and c give a position on the board
+     */
+    public Player setPlayer(int r, int c) {     
+        return board[r][c];
+    }   
+    /**
      * Constructor: a Board constructed by duplicating b and
      * applying nextMove to the new Board.
      */
@@ -83,7 +90,19 @@ public class Board {
     public void makeMove(Move move) {
         // TODO
         //Delete the following code once you've decided to start implementing
-//        throw new UnsupportedOperationException("You need to implement makeMove before running the game.");
+    	//throw new UnsupportedOperationException("You need to implement makeMove before running the game.");
+    	
+    	System.out.println("col "+ move.getColumn());
+    	System.out.println("pla "+ move.getPlayer());
+    	/// stop disk
+    	board[5][move.getColumn()]= move.getPlayer();
+    	//System.out.println("this.board[5][0] "+ this.board[5][0]) ; 
+    	Player p = move.getPlayer();
+    	Move mv[];
+    	mv = getPossibleMoves(p);
+    	for(int i = 0; i < mv.length ; i++) {
+    		System.out.print(i+""+ mv[i]+" ") ; 
+		}
     }
 
     /**
@@ -96,10 +115,29 @@ public class Board {
      * of columns that are not full. Thus, if all columns are full, return an
      * array of length 0.
      */
-    public Move[] getPossibleMoves(Player p) {
-        // TODO
-        return null;
-    }
+	public Move[] getPossibleMoves(Player p) {
+		// TODO
+		Move[] m = new Move[42];int i = 0;
+		while ( i < m.length) {
+			for (int r = NUM_ROWS - 1; r >= 0; r--) {
+				for (int c = 0; c < (NUM_COLS); c++) {
+					 //if (this.board[r][c]!=null){System.out.print("+ "+ (c));} //check null ele
+					{
+						// System.out.print(" "+ (this.board[r][c]));
+						// System.out.print("__ "+ m[i]);
+						if (this.board[r][c] != null) {
+							m[i] = new Move(this.board[r][c], c);
+						} else {
+							m[i] = null;
+						}
+						i++;
+					}
+				}
+			}
+			
+		}
+		return m;
+	}
 
     /**
      * Return a representation of this board
