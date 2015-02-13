@@ -81,7 +81,6 @@ public class Board {
     public Player getTile(int row, int col) {
         return board[row][col];
     }
-
     /**
      * Apply Move move to this Board by placing a piece from move's
      * player into move's column on this Board.
@@ -94,17 +93,18 @@ public class Board {
     	
     	System.out.println("col "+ move.getColumn());
     	System.out.println("pla "+ move.getPlayer());
-    	/// stop disk
-    	board[5][move.getColumn()]= move.getPlayer();
+    	/// stop disk board[5][move.getColumn()]= move.getPlayer();
     	//System.out.println("this.board[5][0] "+ this.board[5][0]) ; 
     	Player p = move.getPlayer();
     	Move mv[];
     	mv = getPossibleMoves(p);
-    	for(int i = 0; i < mv.length ; i++) {
-    		System.out.print(i+""+ mv[i]+" ") ; 
-		}
+    	int r = NUM_ROWS;
+    	for(int i = move.getColumn(); i < mv.length ; i = i+ NUM_COLS) {
+    		r = r-1;
+    		System.out.println(i+""+ mv[i]+" ") ; 
+    		if (mv[i] == null){ this.board[r][move.getColumn()]= move.getPlayer();break;}
+		}  	
     }
-
     /**
      * Return an array of all moves that can possibly be made by Player p on this
      * board. The moves must be in order of increasing column number.
@@ -122,9 +122,7 @@ public class Board {
 			for (int r = NUM_ROWS - 1; r >= 0; r--) {
 				for (int c = 0; c < (NUM_COLS); c++) {
 					 //if (this.board[r][c]!=null){System.out.print("+ "+ (c));} //check null ele
-					{
-						// System.out.print(" "+ (this.board[r][c]));
-						// System.out.print("__ "+ m[i]);
+					{ // System.out.print(" "+ (this.board[r][c])); // System.out.print("__ "+ m[i]);
 						if (this.board[r][c] != null) {
 							m[i] = new Move(this.board[r][c], c);
 						} else {
@@ -133,8 +131,7 @@ public class Board {
 						i++;
 					}
 				}
-			}
-			
+			}	
 		}
 		return m;
 	}
